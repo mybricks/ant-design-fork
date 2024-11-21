@@ -73,6 +73,12 @@ function addPluginsForProduction(config) {
 
 let webpackConfig = getWebpackConfig(false);
 
+webpackConfig.forEach((config) => {
+  if (config.output.libraryTarget === "umd") {
+    config.output.library = "antd_5"; // 多版本共存问题
+  }
+})
+
 if (process.env.PRODUCTION_ONLY) {
   console.log('🍐 Build production only');
   webpackConfig = webpackConfig.filter((config) => config.mode === 'production');
